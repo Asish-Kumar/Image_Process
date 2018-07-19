@@ -2,7 +2,7 @@ import face_recognition
 import glob
 import pickle
 
-# In this we are training the modal with many images of same person and then
+# In this file we are training the modal with many images of same person and then
 # applying face_recognition on another image
 
 # Get the directory of sample images for training
