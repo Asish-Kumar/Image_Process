@@ -1,6 +1,7 @@
 import face_recognition
 import glob
 import pickle
+import os.path
 
 # In this we are training the modal with many images of same person and then
 # applying face_recognition on another image
@@ -9,7 +10,7 @@ import pickle
 extensions = ["*.jpg", "*.png"]
 file_names = []
 for ext in extensions:
-    for filename in glob.glob(ext):
+    for filename in glob.glob(os.getcwd()+"/tim/" + ext):
         file_names.append(filename)
 
 known_face_encodings = []
@@ -24,14 +25,12 @@ for image in file_names:
     try:
         person_face_encoding = face_recognition.face_encodings(person_image, person_face_location)[0]
     except Exception:
-        print("FACE NHI MILA")
+        print("FACE NHI MILA"+image)
         continue
 
     known_face_encodings.append(person_face_encoding)
 
 # If known_face_encodings is empty, i.e., no face detected in the training images
-if not known_face_encodings:
-    print("There is no face found in any of the test images, please provide valid test images.")
-else:
+if known_face_encodings:
     with open("known_face_encoding.kfe", "wb") as pfile:
         pickle.dump(known_face_encodings, pfile)
